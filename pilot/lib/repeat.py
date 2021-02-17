@@ -1,6 +1,6 @@
-def forever(f: function):
+def forever(f):
     while True:
         try:
             f()
-        except e:
+        except:
             break

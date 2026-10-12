@@ -28,7 +28,6 @@ BASELINE = 30                 # first baseline, so the 11 line block sits centre
 ADVANCE = 8.4                 # per character, forced through textLength
 STEP = 0.5                    # seconds each frame is held
 PANEL, EDGE, TEXT = '#ffffff', '#d1d9e0', '#1f2328'
-DARK = {'PANEL': '#161b22', 'EDGE': '#30363d', 'TEXT': '#e6edf3'}
 SVG = os.path.join(ROOT, 'docs', 'demo.svg')
 DUMP = os.path.join(ROOT, 'docs', 'demo-frames.txt')
 
@@ -39,21 +38,23 @@ def escape(line):
     return ''.join(ESCAPES.get(character, character) for character in line)
 
 
-def style(cycle):
-    """The stylesheet, built by concatenation: no .format() to mangle the braces."""
-    return '\n'.join([
-        '    .panel { fill: ' + PANEL + '; stroke: ' + EDGE + '; }',
-        '    .text { fill: ' + TEXT + '; }',
-        '    .frame { opacity: 0; animation: step ' + str(cycle) + 's linear infinite; }',
-        '    .f0 { opacity: 1; }',           # if animations never run, frame 0 still shows
-        '    @keyframes step { 0% { opacity: 1 } 7.1428% { opacity: 1 }'
-        ' 7.1429% { opacity: 0 } 100% { opacity: 0 } }',
-        '    @media (prefers-reduced-motion: reduce) { .frame { animation: none } }',
-        '    @media (prefers-color-scheme: dark) {',
-        '      .panel { fill: ' + DARK['PANEL'] + '; stroke: ' + DARK['EDGE'] + '; }',
-        '      .text { fill: ' + DARK['TEXT'] + '; }',
-        '    }',
-    ])
+def frame_markup(index, frame, cycle):
+    """One frame: shown only in its own slot, and frame 0 shows if SMIL is off."""
+    delay = -(cycle - index * STEP)
+    held = round(STEP / cycle, 6)
+    released = round(held + 0.00001, 6)
+    return [
+        '    <g class="frame" opacity="{0}">'.format(1 if index == 0 else 0),
+        '      <animate attributeName="opacity" calcMode="discrete"'
+        ' values="1;1;0;0" keyTimes="0;{0:g};{1:g};1" dur="{2:g}s" begin="{3:g}s"'
+        ' repeatCount="indefinite"/>'.format(held, released, cycle, delay),
+    ] + [
+        '      <text x="{0}" y="{1}" textLength="{2}" lengthAdjust="spacingAndGlyphs"'
+        ' xml:space="preserve">{3}</text>'.format(
+            PAD, BASELINE + row * LINE_HEIGHT, round(len(line) * ADVANCE, 2),
+            escape(line))
+        for row, line in enumerate(frame)
+    ] + ['    </g>']
 
 
 def svg(frames=None):
@@ -69,24 +70,12 @@ def svg(frames=None):
         ' move  q quit". The animation walks the character up and right onto the'
         ' treasure, turns it in place, steps it forward, and bumps it into the top edge,'
         ' where it turns 180 degrees.</desc>',
-        '  <style>',
-        style(cycle),
-        '  </style>',
-        '  <rect class="panel" x="0.5" y="0.5" width="{0}" height="{1}" rx="8"/>'
-        .format(WIDTH - 1, HEIGHT - 1),
-        '  <g class="text" font-family=\'{0}\' font-size="{1}">'.format(FAMILY, FONT_SIZE),
+        '  <rect x="0.5" y="0.5" width="{0}" height="{1}" rx="8" fill="{2}" stroke="{3}"/>'
+        .format(WIDTH - 1, HEIGHT - 1, PANEL, EDGE),
+        '  <g font-family=\'{0}\' font-size="{1}" fill="{2}">'.format(FAMILY, FONT_SIZE, TEXT),
     ]
     for index, frame in enumerate(frames):
-        delay = -(cycle - index * STEP)      # each frame shows in its own 0.5s slot
-        parts.append('    <g class="frame f{0}" style="animation-delay: {1:g}s">'
-                     .format(index, delay))
-        for row, line in enumerate(frame):
-            parts.append(
-                '      <text x="{0}" y="{1}" textLength="{2}" '
-                'lengthAdjust="spacingAndGlyphs" xml:space="preserve">{3}</text>'.format(
-                    PAD, BASELINE + row * LINE_HEIGHT, round(len(line) * ADVANCE, 2),
-                    escape(line)))
-        parts.append('    </g>')
+        parts += frame_markup(index, frame, cycle)
     parts += ['  </g>', '</svg>', '']
     return '\n'.join(parts)
 

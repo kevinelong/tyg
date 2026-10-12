@@ -275,13 +275,17 @@ groups = [group for group in root.iter(SVG_NS + 'g')
 assert(len(groups) == len(drawn))
 assert([len(group.findall(SVG_NS + 'text')) for group in groups] == [11] * len(drawn))
 assert((root.get('width'), root.get('height')) == ('440', '224'))
-assert('@keyframes' in published)                        # it animates
-assert('@keyframes step { 0% { opacity: 1 }' in published)
-assert('{{' not in published and '}}' not in published), \
-    'the stylesheet has doubled braces: a .format() template mangled it, and the ' \
-    'animation and theme rules silently stop applying'
-assert('.f0 { opacity: 1; }' in published), \
-    'frame 0 has no static fallback: with animations off the panel renders empty'
-assert('prefers-reduced-motion' in published)            # and can hold still
-assert('prefers-color-scheme: dark' in published)        # and follows the theme
+assert('<style' not in published), \
+    'a stylesheet is parsed differently depending on how the file is served, and one ' \
+    'serving context kept the first rules and dropped the keyframes, leaving it blank'
+assert(published.count('<animate') == len(drawn))
+assert([group.get('opacity') for group in groups] == ['1'] + ['0'] * (len(drawn) - 1)), \
+    'frame 0 must carry a visible opacity so the card still shows if the animation ' \
+    'never runs, and every other frame must start hidden'
+for group in groups:
+    animate = group.find(SVG_NS + 'animate')
+    assert(animate is not None and animate.get('attributeName') == 'opacity')
+    assert(animate.get('calcMode') == 'discrete')          # a step, not a fade
+    assert(animate.get('repeatCount') == 'indefinite')
+    assert(animate.get('keyTimes') == '0;0.071429;0.071439;1')   # one 0.5s slot in 7s
 assert('href' not in published and '<script' not in published)

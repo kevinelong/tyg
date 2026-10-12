@@ -31,6 +31,7 @@ LINE_HEIGHT = 21
 FONT_SIZE = 14
 TOP = 22                       # centres the 11 line block in the panel
 PANEL, TEXT = '0xffffff', '0x1f2328'
+BORDER = '0xd1d9e0'            # the panel edge the SVG card had, so it reads as a card
 RATE = 2                       # frames per second -> a 0.5s GIF delay per frame
 GIF = os.path.join(ROOT, 'docs', 'demo.gif')
 DUMP = os.path.join(ROOT, 'docs', 'demo-frames.txt')
@@ -43,7 +44,7 @@ def drawtext(line, y):
 
 def render(frame, index, directory):
     """One PNG per frame: a panel, then one drawtext per line of the frame."""
-    filters = []
+    filters = ['drawbox=x=0:y=0:w={0}:h={1}:color={2}:t=1'.format(WIDTH, HEIGHT, BORDER)]
     for row, line in enumerate(frame):
         path = os.path.join(directory, 'line_{0:02d}.txt'.format(row))
         with open(path, 'w', encoding='utf-8') as handle:
@@ -65,7 +66,7 @@ def encode(pngs, target):
         'ffmpeg', '-y', '-loglevel', 'error',
         '-framerate', str(RATE), '-i',
         os.path.join(os.path.dirname(pngs[0]), 'frame_%03d.png'),
-        '-vf', 'split[a][b];[a]palettegen=max_colors=4[p];'
+        '-vf', 'split[a][b];[a]palettegen=max_colors=8[p];'
                '[b][p]paletteuse=dither=none',
         '-loop', '0', target,
     ], check=True)

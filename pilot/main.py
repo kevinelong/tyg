@@ -1,22 +1,22 @@
+"""Play the game in a terminal.
+
+Run from the repository root: python3 -m pilot.main
+"""
+from pilot.lib.controls import handle
 from pilot.lib.game import Game
-from pilot.lib.keypress import get_key
-from pilot.lib.repeat import forever
-
-g = Game()
-GET_KEY_MAP = {
-    (27, 91, 51, 126): 'DELETE',
-    (27, 91, 53, 126): 'PAGE_UP',
-    (27, 91, 54, 126): 'PAGE_DOWN',
-}
+from pilot.lib.keypress import end_keyboard, get_key
 
 
-def play():
-    print(g.board.content[0].position.y)
-    g.draw()
-    k = get_key(GET_KEY_MAP)
-    print(k)
-    if 'q' == k:
-        raise
+def play(game):
+    """Draw, read one key, act on it, until the player quits."""
+    while True:
+        game.draw()
+        if not handle(game, get_key()):
+            return game
 
 
-forever(play)
+if __name__ == '__main__':
+    try:
+        play(Game())
+    finally:
+        end_keyboard()

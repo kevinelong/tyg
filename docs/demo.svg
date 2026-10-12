@@ -5,12 +5,13 @@
     .panel { fill: #ffffff; stroke: #d1d9e0; }
     .text { fill: #1f2328; }
     .frame { opacity: 0; animation: step 7.0s linear infinite; }
-    @keyframes step {{ 0% {{ opacity: 1 }} 7.1428% {{ opacity: 1 }} 7.1429% {{ opacity: 0 }} 100% {{ opacity: 0 }} }}
-    @media (prefers-reduced-motion: reduce) {{ .frame {{ animation: none }} .f0 {{ opacity: 1 }} }}
-    @media (prefers-color-scheme: dark) {{
+    .f0 { opacity: 1; }
+    @keyframes step { 0% { opacity: 1 } 7.1428% { opacity: 1 } 7.1429% { opacity: 0 } 100% { opacity: 0 } }
+    @media (prefers-reduced-motion: reduce) { .frame { animation: none } }
+    @media (prefers-color-scheme: dark) {
       .panel { fill: #161b22; stroke: #30363d; }
       .text { fill: #e6edf3; }
-    }}
+    }
   </style>
   <rect class="panel" x="0.5" y="0.5" width="439" height="223" rx="8"/>
   <g class="text" font-family='ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace' font-size="14">

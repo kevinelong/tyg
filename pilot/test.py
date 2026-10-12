@@ -276,6 +276,12 @@ assert(len(groups) == len(drawn))
 assert([len(group.findall(SVG_NS + 'text')) for group in groups] == [11] * len(drawn))
 assert((root.get('width'), root.get('height')) == ('440', '224'))
 assert('@keyframes' in published)                        # it animates
+assert('@keyframes step { 0% { opacity: 1 }' in published)
+assert('{{' not in published and '}}' not in published), \
+    'the stylesheet has doubled braces: a .format() template mangled it, and the ' \
+    'animation and theme rules silently stop applying'
+assert('.f0 { opacity: 1; }' in published), \
+    'frame 0 has no static fallback: with animations off the panel renders empty'
 assert('prefers-reduced-motion' in published)            # and can hold still
 assert('prefers-color-scheme: dark' in published)        # and follows the theme
 assert('href' not in published and '<script' not in published)

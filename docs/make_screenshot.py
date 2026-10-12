@@ -39,6 +39,23 @@ def escape(line):
     return ''.join(ESCAPES.get(character, character) for character in line)
 
 
+def style(cycle):
+    """The stylesheet, built by concatenation: no .format() to mangle the braces."""
+    return '\n'.join([
+        '    .panel { fill: ' + PANEL + '; stroke: ' + EDGE + '; }',
+        '    .text { fill: ' + TEXT + '; }',
+        '    .frame { opacity: 0; animation: step ' + str(cycle) + 's linear infinite; }',
+        '    .f0 { opacity: 1; }',           # if animations never run, frame 0 still shows
+        '    @keyframes step { 0% { opacity: 1 } 7.1428% { opacity: 1 }'
+        ' 7.1429% { opacity: 0 } 100% { opacity: 0 } }',
+        '    @media (prefers-reduced-motion: reduce) { .frame { animation: none } }',
+        '    @media (prefers-color-scheme: dark) {',
+        '      .panel { fill: ' + DARK['PANEL'] + '; stroke: ' + DARK['EDGE'] + '; }',
+        '      .text { fill: ' + DARK['TEXT'] + '; }',
+        '    }',
+    ])
+
+
 def svg(frames=None):
     """The whole document, as text, with no timestamps: byte-for-byte stable."""
     frames = demo.frames() if frames is None else frames
@@ -53,17 +70,7 @@ def svg(frames=None):
         ' treasure, turns it in place, steps it forward, and bumps it into the top edge,'
         ' where it turns 180 degrees.</desc>',
         '  <style>',
-        '    .panel {{ fill: {0}; stroke: {1}; }}'.format(PANEL, EDGE),
-        '    .text {{ fill: {0}; }}'.format(TEXT),
-        '    .frame {{ opacity: 0; animation: step {0}s linear infinite; }}'.format(cycle),
-        '    @keyframes step {{ 0% {{ opacity: 1 }} 7.1428% {{ opacity: 1 }}'
-        ' 7.1429% {{ opacity: 0 }} 100% {{ opacity: 0 }} }}',
-        '    @media (prefers-reduced-motion: reduce) {{ .frame {{ animation: none }}'
-        ' .f0 {{ opacity: 1 }} }}',
-        '    @media (prefers-color-scheme: dark) {{',
-        '      .panel {{ fill: {0}; stroke: {1}; }}'.format(DARK['PANEL'], DARK['EDGE']),
-        '      .text {{ fill: {0}; }}'.format(DARK['TEXT']),
-        '    }}',
+        style(cycle),
         '  </style>',
         '  <rect class="panel" x="0.5" y="0.5" width="{0}" height="{1}" rx="8"/>'
         .format(WIDTH - 1, HEIGHT - 1),

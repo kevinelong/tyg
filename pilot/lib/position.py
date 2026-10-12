@@ -7,3 +7,9 @@ class Position():
         if not isinstance(other, Position):
             return NotImplemented
         return (self.x, self.y) == (other.x, other.y)
+
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+    def __repr__(self):
+        return "Position({0!r}, {1!r})".format(self.x, self.y)

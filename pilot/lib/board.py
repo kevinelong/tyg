@@ -8,12 +8,14 @@ class Board:
     def add_item(self, item):
         self.content.append(item)
 
-    def draw(self):
-        for y in range(0, self.height):
-            for x in range(0, self.width):
-                symbol = "."
-                for item in self.content:
-                    if item.position.x == x and item.position.y == y:
-                        symbol = item.symbol
-                print(symbol, end=" ")
-            print("", end="\r\n")
+    def symbol_at(self, x, y):
+        symbol = "."
+        for item in self.content:
+            if item.position.x == x and item.position.y == y:
+                symbol = item.symbol
+        return symbol
+
+    def rows(self):
+        """The board as one printable row per y, top row first."""
+        return [" ".join(self.symbol_at(x, y) for x in range(self.width))
+                for y in range(self.height)]

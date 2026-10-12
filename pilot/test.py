@@ -12,12 +12,21 @@ TURN:
 7. if player and treasure collide then remove treasure and add a new one in a blank square.
 8. Arrow keys and HJKL also move: each one faces and steps a square in the
    direction pressed. Any other key is ignored, and Q quits.
+9. Count collected treasures, show the tally under the board, and win once
+   the goal is reached (10 by default). Redraw in place, and stop cleanly
+   when the terminal gives no more input.
 
 Run from the repository root: python3 -m pilot.test
 """
+import contextlib
+import io
+
 from pilot.lib.character import DOWN, LEFT, RIGHT, UP
 from pilot.lib.controls import handle
 from pilot.lib.game import Game
+from pilot.lib.keys import (ERR, ESCAPE, ESCAPE_TIMEOUT, GET_KEY_MAP, UNKNOWN,
+                            match_escape, read_key)
+from pilot.lib.position import Position
 
 WIDTH = HEIGHT = 9
 CENTER = WIDTH // 2
@@ -101,6 +110,7 @@ assert(handle(g, 'DOWN') is True)
 assert(handle(g, 'RIGHT') is True)
 assert((g.character.position.x, g.character.position.y) == (CENTER, CENTER))
 assert(handle(g, 'z') is True)
+assert(handle(g, UNKNOWN) is True)     # Escape, Home, End and friends are ignored
 assert(handle(g, 'q') is False)
 
 # EDGES: a blocked move does not move and turns the character 180 degrees
@@ -141,3 +151,96 @@ assert((g.character.position.x, g.character.position.y) == (CENTER + 1, CENTER))
 assert((g.treasure.position.x, g.treasure.position.y) != (CENTER + 1, CENTER))
 assert(max(abs(g.treasure.position.x - (CENTER + 1)),
            abs(g.treasure.position.y - CENTER)) > 1)
+
+# RENDER: one frame, drawn in place, board then tally then controls
+g = new_game()
+rows = g.board.rows()
+assert(len(rows) == HEIGHT)
+assert(all(len(row.split()) == WIDTH for row in rows))
+assert(rows[CENTER].split()[CENTER] == '^')
+assert(rows[g.treasure.position.y].split()[g.treasure.position.x] == 'x')
+
+frame = io.StringIO()
+with contextlib.redirect_stdout(frame):
+    g.draw()
+frame = frame.getvalue()
+assert(frame.startswith('\033[H'))                  # homed, so it redraws in place
+assert(frame.count('\033[K') == HEIGHT + 2)         # every row wiped to end of line
+assert(frame.count('\r\n') == HEIGHT + 1)           # one break between rows
+assert(not frame.endswith('\n'))                    # no scroll before the next home
+assert('Treasures: 0 of 10' in frame)
+assert('q quit' in frame)
+
+# GOAL: the tally counts pickups and the game is won at the goal
+g = Game(goal=2)
+assert(g.collected == 0)
+assert(g.won is False)
+g.treasure.position.x = CENTER + 1
+g.treasure.position.y = CENTER
+g.move(RIGHT)
+assert(g.collected == 1)
+assert(g.won is False)
+g.treasure.position.x = CENTER + 2
+g.treasure.position.y = CENTER
+g.move(RIGHT)
+assert(g.collected == 2)
+assert(g.won is True)
+assert(g.summary() == 'All 2 treasures found.')
+assert(Game(goal=3).summary() == 'Treasures found: 0 of 3.')
+
+# ESCAPES: whole sequences decode, anything else is one ignored key
+assert(match_escape((ESCAPE,)) == (None, False))
+assert(match_escape((ESCAPE, 91)) == (None, False))
+assert(match_escape((ESCAPE, 91, 65)) == ('UP', True))
+assert(match_escape((ESCAPE, 91, 66)) == ('DOWN', True))
+assert(match_escape((ESCAPE, 91, 67)) == ('RIGHT', True))
+assert(match_escape((ESCAPE, 91, 68)) == ('LEFT', True))
+assert(match_escape((ESCAPE, 91, 51, 126)) == ('DELETE', True))
+assert(match_escape((ESCAPE, 91, 90)) == (None, True))   # ESC [ Z is not mapped
+assert(match_escape((ESCAPE, 97)) == (None, True))       # Alt-a is not mapped
+assert(set(GET_KEY_MAP.values()) >= {'UP', 'DOWN', 'LEFT', 'RIGHT'})
+
+
+class FakeScreen:
+    """A curses screen that hands out prepared bytes, then nothing."""
+
+    def __init__(self, keys):
+        self.keys = list(keys)
+        self.timeouts = []
+
+    def getch(self):
+        if self.keys:
+            return self.keys.pop(0)
+        return ERR
+
+    def timeout(self, milliseconds):
+        self.timeouts.append(milliseconds)
+
+
+# READING: arrows come back named, junk is ignored whole, no input is None
+screen = FakeScreen([ESCAPE, 91, 65, 107])
+assert(read_key(screen) == 'UP')
+assert(read_key(screen) == 'k')
+assert(screen.timeouts == [ESCAPE_TIMEOUT, -1])
+
+screen = FakeScreen([ESCAPE, 91, 90, 107])               # ESC [ Z, then k
+assert(read_key(screen) == UNKNOWN)                      # the whole run is one key
+assert(read_key(screen) == 'k')
+
+screen = FakeScreen([ESCAPE, 91, 54, 126])
+assert(read_key(screen) == 'PAGE_DOWN')
+screen = FakeScreen([ESCAPE, 97, 107])                   # Alt-a, then k
+assert(read_key(screen) == UNKNOWN)
+assert(read_key(screen) == 'k')
+screen = FakeScreen([ESCAPE])                            # ESC on its own
+assert(read_key(screen) == UNKNOWN)
+assert(screen.timeouts == [ESCAPE_TIMEOUT, -1])          # and blocking is restored
+
+assert(read_key(FakeScreen([])) is None)                 # end of input, not a crash
+
+# POSITIONS: usable as values and readable in a debug print
+assert(Position(1, 2) == Position(1, 2))
+assert(Position(1, 2) != Position(2, 1))
+assert(Position(1, 2) != (1, 2))
+assert(len({Position(1, 2), Position(1, 2)}) == 1)
+assert(repr(Position(1, 2)) == 'Position(1, 2)')

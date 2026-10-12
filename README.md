@@ -2,7 +2,7 @@
 
 A small terminal game: a 9x9 board, a character you turn and walk, and a
 treasure that moves to a new square whenever you step on it. The character
-shows which way it faces as `^ > v <`.
+shows which way it faces as `^ > v <`. Collect ten treasures to win.
 
 ## Run
 
@@ -22,8 +22,15 @@ root, not as `python3 pilot/main.py`:
 | arrow keys | move left / down / up / right |
 | `q` | quit |
 
+The board, the tally and the controls line are redrawn in place each turn.
 Walking off the edge of the board is blocked and turns you 180 degrees.
+Escape sequences the game does not use (Home, End, function keys) are read
+whole and ignored, and running out of input quits cleanly with the tally.
 
 ## Test
 
     python3 -m pilot.test
+
+## Licence
+
+Functional Source License 1.1, MIT future licence - see LICENSE.md.

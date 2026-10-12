@@ -5,6 +5,8 @@ from pilot.lib.keys import GET_KEY_MAP, read_key
 s = curses.initscr()
 curses.noecho()
 curses.cbreak()
+s.refresh()      # take the screen now: getch() would otherwise clear it after the
+                 # first frame is already on it, leaving the game blank until a key
 
 
 def get_key(key_map=GET_KEY_MAP, screen=s):

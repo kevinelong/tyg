@@ -1,5 +1,7 @@
 # tyg
 
+![A terminal card from tyg: a 9x9 board of dots with the character ^ at the centre and the treasure x at (6, 1), under the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit".](docs/screenshot.svg)
+
 A small terminal game: a 9x9 board, a character you turn and walk, and a
 treasure that moves to a new square whenever you step on it. The character
 shows which way it faces as `^ > v <`. Collect ten treasures to win.

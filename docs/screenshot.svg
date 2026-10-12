@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="267" viewBox="0 0 440 267" role="img" aria-labelledby="t d">
+  <title id="t">tyg running in a terminal</title>
+  <desc id="d">A 9x9 board of dots with the character ^ at the centre and a treasure x at (6, 1), over the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit".</desc>
+  <!-- generated from pilot frame bytes: random.seed(16), Game().draw(), ANSI escapes stripped -->
+  <style>
+    .panel { fill: #ffffff; stroke: #d1d9e0; }
+    .text { fill: #1f2328; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #161b22; stroke: #30363d; }
+      .text { fill: #e6edf3; }
+    }
+  </style>
+  <rect class="panel" x="0.5" y="0.5" width="439" height="266" rx="8"/>
+  <g class="text" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">
+    <text x="18" y="32" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="53" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+    <text x="18" y="74" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="95" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="116" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . ^ . . . .</text>
+    <text x="18" y="137" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="158" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="179" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="200" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+    <text x="18" y="221" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+    <text x="18" y="242" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+  </g>
+</svg>

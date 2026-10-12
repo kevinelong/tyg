@@ -66,8 +66,9 @@ def encode(pngs, target):
         'ffmpeg', '-y', '-loglevel', 'error',
         '-framerate', str(RATE), '-i',
         os.path.join(os.path.dirname(pngs[0]), 'frame_%03d.png'),
-        '-vf', 'split[a][b];[a]palettegen=max_colors=8[p];'
+        '-vf', 'split[a][b];[a]palettegen=max_colors=8:reserve_transparent=0[p];'
                '[b][p]paletteuse=dither=none',
+        '-gifflags', '-transdiff',   # full frames: transparent diffs make viewers disagree
         '-loop', '0', target,
     ], check=True)
 

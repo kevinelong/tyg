@@ -259,12 +259,12 @@ for frame in drawn:
 
 
 def gif(data):
-    """Walk a GIF: (width, height, per-frame delay, loops)."""
+    """Walk a GIF: (width, height, per-frame details, loops)."""
     assert(data[:6] in (b'GIF87a', b'GIF89a'))
     width, height = int.from_bytes(data[6:8], 'little'), int.from_bytes(data[8:10], 'little')
     flags = data[10]
     at = 13 + (3 * 2 ** ((flags & 0x07) + 1) if flags & 0x80 else 0)
-    delays, delay, loops = [], None, False
+    frames, control, loops = [], None, False
     while at < len(data):
         block = data[at]
         if block == 0x3b:
@@ -273,7 +273,9 @@ def gif(data):
             label = data[at + 1]
             at += 2
             if label == 0xf9:
-                delay = int.from_bytes(data[at + 2:at + 4], 'little')
+                control = {'delay': int.from_bytes(data[at + 2:at + 4], 'little'),
+                           'dispose': (data[at + 1] >> 2) & 0x07,
+                           'transparent': bool(data[at + 1] & 0x01)}
             if label == 0xff and data[at + 1:at + 12] == b'NETSCAPE2.0':
                 loops = True
         elif block == 0x2c:
@@ -281,18 +283,22 @@ def gif(data):
             at += 10
             if local & 0x80:
                 at += 3 * 2 ** ((local & 0x07) + 1)
-            delays.append(delay)
+            frames.append(control)
             at += 1                          # the LZW minimum code size byte
         else:
             raise AssertionError('unexpected GIF block 0x{0:02x} at {1}'.format(block, at))
         while data[at]:                      # skip the data sub-blocks
             at += 1 + data[at]
         at += 1
-    return width, height, delays, loops
+    return width, height, frames, loops
 
 
-gif_width, gif_height, gif_delays, gif_loops = gif((ROOT / 'docs' / 'demo.gif').read_bytes())
+gif_width, gif_height, gif_frames, gif_loops = gif((ROOT / 'docs' / 'demo.gif').read_bytes())
 assert((gif_width, gif_height) == (440, 268))
 assert(gif_loops is True)
-assert(len(gif_delays) == len(drawn))
-assert(set(gif_delays) == {50})              # half a second per frame
+assert(len(gif_frames) == len(drawn))
+assert({frame['delay'] for frame in gif_frames} == {50})     # half a second each
+assert(not any(frame['transparent'] for frame in gif_frames)), \
+    'the GIF uses transparent-diff frames - viewers disagree about them, so ' \
+    'regenerate with make_screenshot.py (palettegen reserve_transparent=0, ' \
+    '-gifflags -transdiff)'

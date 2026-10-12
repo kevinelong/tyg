@@ -25,11 +25,12 @@ sys.path.insert(0, ROOT)
 from pilot import demo                                                    # noqa: E402
 
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
-WIDTH, HEIGHT = 440, 268      # even: lavfi's colour source will not give an odd height
+WIDTH, HEIGHT = 440, 224      # even: lavfi's colour source will not give an odd height
 PAD = 18
-LINE_HEIGHT = 21
+LINE_HEIGHT = 17              # DejaVu Sans Mono's own line box at 14px: no extra leading,
+                              # the way a terminal packs rows
 FONT_SIZE = 14
-TOP = 22                       # centres the 11 line block in the panel
+TOP = 19                      # centres the 11 line block in the panel
 PANEL, TEXT = '0xffffff', '0x1f2328'
 BORDER = '0xd1d9e0'            # the panel edge the SVG card had, so it reads as a card
 RATE = 2                       # frames per second -> a 0.5s GIF delay per frame

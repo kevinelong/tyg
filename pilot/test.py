@@ -294,7 +294,7 @@ def gif(data):
 
 
 gif_width, gif_height, gif_frames, gif_loops = gif((ROOT / 'docs' / 'demo.gif').read_bytes())
-assert((gif_width, gif_height) == (440, 268))
+assert((gif_width, gif_height) == (440, 224))
 assert(gif_loops is True)
 assert(len(gif_frames) == len(drawn))
 assert({frame['delay'] for frame in gif_frames} == {50})     # half a second each

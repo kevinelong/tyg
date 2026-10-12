@@ -1,0 +1,167 @@
+. . . . . . . . .
+. . . . . . x . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . ^ . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . . . . . .
+. . . . ^ . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . ^ . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . . > . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . . . . . .
+. . . . . v . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . . . . . .
+. . . . . . > . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . x . .
+. . . . . . ^ . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 0 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . ^ . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . . < . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . < . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . ^ . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . v . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . . v . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit
+
+. . . . . . . . .
+. . . . < . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . x .
+. . . . . . . . .
+. . . . . . . . .
+Treasures: 1 of 10
+a/d turn  s step  h j k l or arrows move  q quit

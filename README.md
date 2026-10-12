@@ -1,6 +1,6 @@
 # tyg
 
-![A terminal card from tyg: a 9x9 board of dots with the character ^ at the centre and the treasure x at (6, 1), under the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit".](docs/screenshot.svg)
+![tyg running in a terminal: a 9x9 board of dots with the character ^ at the centre and the treasure x at (6, 1), and under it the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit". The animation walks the character up and right to the treasure, turns it in place, steps it forward, and bumps it into the top edge, where it turns 180 degrees.](docs/demo.gif)
 
 A small terminal game: a 9x9 board, a character you turn and walk, and a
 treasure that moves to a new square whenever you step on it. The character
@@ -32,6 +32,16 @@ whole and ignored, and running out of input quits cleanly with the tally.
 ## Test
 
     python3 -m pilot.test
+
+## Screenshot
+
+`docs/demo.gif` and its text dump `docs/demo-frames.txt` are generated from the
+game's own frames by
+
+    python3 docs/make_screenshot.py       # needs ffmpeg and DejaVuSansMono
+
+`docs/demo-frames.txt` is what the GIF shows, so the picture can be read and
+diffed, and `python3 -m pilot.test` fails when it goes stale.
 
 ## Licence
 

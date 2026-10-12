@@ -20,7 +20,9 @@ Run from the repository root: python3 -m pilot.test
 """
 import contextlib
 import io
+import pathlib
 
+from pilot import demo
 from pilot.lib.character import DOWN, LEFT, RIGHT, UP
 from pilot.lib.controls import handle
 from pilot.lib.game import Game
@@ -244,3 +246,53 @@ assert(Position(1, 2) != Position(2, 1))
 assert(Position(1, 2) != (1, 2))
 assert(len({Position(1, 2), Position(1, 2)}) == 1)
 assert(repr(Position(1, 2)) == 'Position(1, 2)')
+
+# SCREENSHOT: docs/demo.gif shows these frames, docs/demo-frames.txt is their text
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+assert(demo.text_dump() == (ROOT / 'docs' / 'demo-frames.txt').read_text(encoding='utf-8')), \
+    'docs/demo-frames.txt is stale - run python3 docs/make_screenshot.py'
+
+drawn = demo.frames()
+for frame in drawn:
+    assert(len(frame) == 11)
+    assert([len(line) for line in frame] == [17] * 9 + [18, 48])
+
+
+def gif(data):
+    """Walk a GIF: (width, height, per-frame delay, loops)."""
+    assert(data[:6] in (b'GIF87a', b'GIF89a'))
+    width, height = int.from_bytes(data[6:8], 'little'), int.from_bytes(data[8:10], 'little')
+    flags = data[10]
+    at = 13 + (3 * 2 ** ((flags & 0x07) + 1) if flags & 0x80 else 0)
+    delays, delay, loops = [], None, False
+    while at < len(data):
+        block = data[at]
+        if block == 0x3b:
+            break
+        if block == 0x21:
+            label = data[at + 1]
+            at += 2
+            if label == 0xf9:
+                delay = int.from_bytes(data[at + 2:at + 4], 'little')
+            if label == 0xff and data[at + 1:at + 12] == b'NETSCAPE2.0':
+                loops = True
+        elif block == 0x2c:
+            local = data[at + 9]
+            at += 10
+            if local & 0x80:
+                at += 3 * 2 ** ((local & 0x07) + 1)
+            delays.append(delay)
+            at += 1                          # the LZW minimum code size byte
+        else:
+            raise AssertionError('unexpected GIF block 0x{0:02x} at {1}'.format(block, at))
+        while data[at]:                      # skip the data sub-blocks
+            at += 1 + data[at]
+        at += 1
+    return width, height, delays, loops
+
+
+gif_width, gif_height, gif_delays, gif_loops = gif((ROOT / 'docs' / 'demo.gif').read_bytes())
+assert((gif_width, gif_height) == (440, 268))
+assert(gif_loops is True)
+assert(len(gif_delays) == len(drawn))
+assert(set(gif_delays) == {50})              # half a second per frame

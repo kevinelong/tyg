@@ -1,3 +1,2 @@
-# the README screenshot is a generated binary: never apply line-ending conversion to it
-*.gif binary
-*.png binary
+# the README screenshot is generated text: keep it LF so regeneration compares byte for byte
+*.svg text eol=lf

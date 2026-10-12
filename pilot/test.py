@@ -19,8 +19,10 @@ TURN:
 Run from the repository root: python3 -m pilot.test
 """
 import contextlib
+import importlib.util
 import io
 import pathlib
+import xml.etree.ElementTree as ElementTree
 
 from pilot import demo
 from pilot.lib.character import DOWN, LEFT, RIGHT, UP
@@ -247,7 +249,7 @@ assert(Position(1, 2) != (1, 2))
 assert(len({Position(1, 2), Position(1, 2)}) == 1)
 assert(repr(Position(1, 2)) == 'Position(1, 2)')
 
-# SCREENSHOT: docs/demo.gif shows these frames, docs/demo-frames.txt is their text
+# SCREENSHOT: docs/demo.svg is the published animation, docs/demo-frames.txt its text
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 assert(demo.text_dump() == (ROOT / 'docs' / 'demo-frames.txt').read_text(encoding='utf-8')), \
     'docs/demo-frames.txt is stale - run python3 docs/make_screenshot.py'
@@ -257,48 +259,23 @@ for frame in drawn:
     assert(len(frame) == 11)
     assert([len(line) for line in frame] == [17] * 9 + [18, 48])
 
+spec = importlib.util.spec_from_file_location(
+    'make_screenshot', ROOT / 'docs' / 'make_screenshot.py')
+screenshot = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(screenshot)
 
-def gif(data):
-    """Walk a GIF: (width, height, per-frame details, loops)."""
-    assert(data[:6] in (b'GIF87a', b'GIF89a'))
-    width, height = int.from_bytes(data[6:8], 'little'), int.from_bytes(data[8:10], 'little')
-    flags = data[10]
-    at = 13 + (3 * 2 ** ((flags & 0x07) + 1) if flags & 0x80 else 0)
-    frames, control, loops = [], None, False
-    while at < len(data):
-        block = data[at]
-        if block == 0x3b:
-            break
-        if block == 0x21:
-            label = data[at + 1]
-            at += 2
-            if label == 0xf9:
-                control = {'delay': int.from_bytes(data[at + 2:at + 4], 'little'),
-                           'dispose': (data[at + 1] >> 2) & 0x07,
-                           'transparent': bool(data[at + 1] & 0x01)}
-            if label == 0xff and data[at + 1:at + 12] == b'NETSCAPE2.0':
-                loops = True
-        elif block == 0x2c:
-            local = data[at + 9]
-            at += 10
-            if local & 0x80:
-                at += 3 * 2 ** ((local & 0x07) + 1)
-            frames.append(control)
-            at += 1                          # the LZW minimum code size byte
-        else:
-            raise AssertionError('unexpected GIF block 0x{0:02x} at {1}'.format(block, at))
-        while data[at]:                      # skip the data sub-blocks
-            at += 1 + data[at]
-        at += 1
-    return width, height, frames, loops
+published = (ROOT / 'docs' / 'demo.svg').read_text(encoding='utf-8')
+assert(screenshot.svg() == published), \
+    'docs/demo.svg is stale - run python3 docs/make_screenshot.py'
 
-
-gif_width, gif_height, gif_frames, gif_loops = gif((ROOT / 'docs' / 'demo.gif').read_bytes())
-assert((gif_width, gif_height) == (440, 224))
-assert(gif_loops is True)
-assert(len(gif_frames) == len(drawn))
-assert({frame['delay'] for frame in gif_frames} == {50})     # half a second each
-assert(not any(frame['transparent'] for frame in gif_frames)), \
-    'the GIF uses transparent-diff frames - viewers disagree about them, so ' \
-    'regenerate with make_screenshot.py (palettegen reserve_transparent=0, ' \
-    '-gifflags -transdiff)'
+root = ElementTree.fromstring(published)
+SVG_NS = '{http://www.w3.org/2000/svg}'
+groups = [group for group in root.iter(SVG_NS + 'g')
+          if (group.get('class') or '').startswith('frame')]
+assert(len(groups) == len(drawn))
+assert([len(group.findall(SVG_NS + 'text')) for group in groups] == [11] * len(drawn))
+assert((root.get('width'), root.get('height')) == ('440', '224'))
+assert('@keyframes' in published)                        # it animates
+assert('prefers-reduced-motion' in published)            # and can hold still
+assert('prefers-color-scheme: dark' in published)        # and follows the theme
+assert('href' not in published and '<script' not in published)

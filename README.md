@@ -1,6 +1,6 @@
 # tyg
 
-![tyg running in a terminal: a 9x9 board of dots with the character ^ at the centre and the treasure x at (6, 1), and under it the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit". The animation walks the character up and right to the treasure, turns it in place, steps it forward, and bumps it into the top edge, where it turns 180 degrees.](docs/demo.gif)
+![tyg running in a terminal: a 9x9 board of dots with the character ^ at the centre and the treasure x at (6, 1), and under it the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit". The animation walks the character up and right to the treasure, turns it in place, steps it forward, and bumps it into the top edge, where it turns 180 degrees.](docs/demo.svg)
 
 A small terminal game: a 9x9 board, a character you turn and walk, and a
 treasure that moves to a new square whenever you step on it. The character
@@ -35,13 +35,15 @@ whole and ignored, and running out of input quits cleanly with the tally.
 
 ## Screenshot
 
-`docs/demo.gif` and its text dump `docs/demo-frames.txt` are generated from the
-game's own frames by
+`docs/demo.svg` is the animation above and `docs/demo-frames.txt` is the text
+of its frames, both generated from the game's own output by
 
-    python3 docs/make_screenshot.py       # needs ffmpeg and DejaVuSansMono
+    python3 docs/make_screenshot.py       # needs nothing but Python
 
-`docs/demo-frames.txt` is what the GIF shows, so the picture can be read and
-diffed, and `python3 -m pilot.test` fails when it goes stale.
+Vector text, so it stays crisp at any zoom and carries no image codec, and the
+frames are plain text so a diff shows exactly what changed. `python3 -m
+pilot.test` regenerates the SVG and fails unless it matches the committed file
+byte for byte, so the picture cannot drift from the program.
 
 ## Licence
 

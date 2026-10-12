@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="224" viewBox="0 0 440 224" role="img" aria-labelledby="title desc">
+  <title id="title">tyg running in a terminal</title>
+  <desc id="desc">A 9x9 board of dots with the character ^ and a treasure x, over the lines "Treasures: 0 of 10" and "a/d turn  s step  h j k l or arrows move  q quit". The animation walks the character up and right onto the treasure, turns it in place, steps it forward, and bumps it into the top edge, where it turns 180 degrees.</desc>
+  <style>
+    .panel { fill: #ffffff; stroke: #d1d9e0; }
+    .text { fill: #1f2328; }
+    .frame { opacity: 0; animation: step 7.0s linear infinite; }
+    @keyframes step {{ 0% {{ opacity: 1 }} 7.1428% {{ opacity: 1 }} 7.1429% {{ opacity: 0 }} 100% {{ opacity: 0 }} }}
+    @media (prefers-reduced-motion: reduce) {{ .frame {{ animation: none }} .f0 {{ opacity: 1 }} }}
+    @media (prefers-color-scheme: dark) {{
+      .panel { fill: #161b22; stroke: #30363d; }
+      .text { fill: #e6edf3; }
+    }}
+  </style>
+  <rect class="panel" x="0.5" y="0.5" width="439" height="223" rx="8"/>
+  <g class="text" font-family='ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace' font-size="14">
+    <g class="frame f0" style="animation-delay: -7s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . ^ . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f1" style="animation-delay: -6.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . ^ . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f2" style="animation-delay: -6s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . ^ . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f3" style="animation-delay: -5.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . &gt; . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f4" style="animation-delay: -5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . v . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f5" style="animation-delay: -4.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . &gt; . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f6" style="animation-delay: -4s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . x . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . ^ . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 0 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f7" style="animation-delay: -3.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . ^ . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f8" style="animation-delay: -3s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . &lt; . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f9" style="animation-delay: -2.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . &lt; . . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f10" style="animation-delay: -2s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . ^ . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f11" style="animation-delay: -1.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . v . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f12" style="animation-delay: -1s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . v . . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+    <g class="frame f13" style="animation-delay: -0.5s">
+      <text x="18" y="30" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="47" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . &lt; . . . .</text>
+      <text x="18" y="64" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="81" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="98" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="115" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="132" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . x .</text>
+      <text x="18" y="149" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="166" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">. . . . . . . . .</text>
+      <text x="18" y="183" textLength="151.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Treasures: 1 of 10</text>
+      <text x="18" y="200" textLength="403.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a/d turn  s step  h j k l or arrows move  q quit</text>
+    </g>
+  </g>
+</svg>

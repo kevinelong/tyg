@@ -23,12 +23,13 @@ import importlib.util
 import io
 import os
 import pathlib
+import re
 import xml.etree.ElementTree as ElementTree
 
 from pilot import demo
 from pilot.lib.character import DOWN, LEFT, RIGHT, UP
-from pilot.lib.controls import handle
-from pilot.lib.game import Game
+from pilot.lib.controls import MOVE_KEYS, TURN_KEYS, handle
+from pilot.lib.game import CONTROLS, Game
 from pilot.lib.keys import (ERR, ESCAPE, ESCAPE_TIMEOUT, GET_KEY_MAP, UNKNOWN,
                             match_escape, read_key)
 from pilot.lib.position import Position
@@ -203,6 +204,10 @@ assert(match_escape((ESCAPE, 91, 68)) == ('LEFT', True))
 assert(match_escape((ESCAPE, 91, 51, 126)) == ('DELETE', True))
 assert(match_escape((ESCAPE, 91, 90)) == (None, True))   # ESC [ Z is not mapped
 assert(match_escape((ESCAPE, 97)) == (None, True))       # Alt-a is not mapped
+# the README names Home, End and the function keys as read whole and ignored
+assert(match_escape((ESCAPE, 91, 72)) == (None, True))   # ESC [ H is Home
+assert(match_escape((ESCAPE, 91, 70)) == (None, True))   # ESC [ F is End
+assert(match_escape((ESCAPE, 79, 80)) == (None, True))   # ESC O P is F1
 assert(set(GET_KEY_MAP.values()) >= {'UP', 'DOWN', 'LEFT', 'RIGHT'})
 
 
@@ -346,3 +351,62 @@ if os.name == 'posix':
         'refresh the screen before the first draw)'
     assert(stream.count(b'\x1b[K\r\n') >= 10), \
         'the first frame is incomplete: nine board rows plus the tally did not land'
+
+# CLAIMS: the controls line, the README's key table and the keys the game responds to
+# are three statements of one fact, and nothing tied them together. The README's
+# picture cannot drift from the program; its key table should not either.
+README = (ROOT / 'README.md').read_text(encoding='utf-8')
+
+HANDLED_LETTERS = set(TURN_KEYS) | {'s', 'q'} | {k for k in MOVE_KEYS if len(k) == 1}
+HANDLED_ARROWS = {name for name in MOVE_KEYS if len(name) > 1}
+
+assert(CONTROLS == 'a/d turn  s step  h j k l or arrows move  q quit'), \
+    'the controls line changed; the README quotes it in the screenshot caption'
+
+
+def keys_named(line):
+    """The keys the controls line names: single letters, or slash-joined pairs.
+
+    Keys and prose share the line, so a token counts only when every part of it
+    is one letter - 'a/d' does, 'turn', 'arrows' and 'or' do not.
+    """
+    found = set()
+    for token in line.split():
+        parts = token.split('/')
+        if all(len(part) == 1 for part in parts):
+            found |= set(parts)
+    return found
+
+
+named = keys_named(CONTROLS)
+assert(named == HANDLED_LETTERS), \
+    'the controls line and the keys the game handles disagree: %s vs %s' % (
+        sorted(named), sorted(HANDLED_LETTERS))
+assert(('arrows' in CONTROLS) == bool(HANDLED_ARROWS)), \
+    'the controls line %s name the arrow keys' % ('does not' if HANDLED_ARROWS else 'should not')
+
+lines = README.splitlines()
+assert('| Key | Action |' in lines), 'the README no longer has a key table'
+start = lines.index('| Key | Action |')
+rows = []
+for line in lines[start + 2:]:
+    if not line.startswith('|'):
+        break
+    rows.append(line)
+assert(len(rows) >= 4), 'the README key table shrank to %d rows' % len(rows)
+
+key_column = ' '.join(row.split('|')[1] for row in rows)
+documented = set(re.findall(r'`([a-z])`', key_column))
+assert(documented == HANDLED_LETTERS), \
+    'the README documents %s but the game handles %s' % (
+        sorted(documented), sorted(HANDLED_LETTERS))
+assert(any('arrow keys' in row for row in rows) == bool(HANDLED_ARROWS)), \
+    'the README key table and the arrow keys disagree'
+
+# And the goal the README promises, in the words it promises it.
+assert(Game().goal == 10), 'the default goal is no longer ten: %d' % Game().goal
+assert('Collect ten treasures to win' in README), \
+    'the README no longer promises ten treasures'
+assert('Treasures: 0 of 10' in README), 'the README no longer shows the tally'
+assert('Treasures: 0 of 10' in '\n'.join(demo.frames()[0])), \
+    'the tally the README shows is not what the game draws'

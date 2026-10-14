@@ -33,6 +33,15 @@ whole and ignored, and running out of input quits cleanly with the tally.
 
     python3 -m pilot.test
 
+It needs no dependencies and no network. It drives the game's own objects and a
+fake screen, and it checks that the keys the game handles are the ones the
+controls line and the table above name - so a key cannot be added, renamed or
+dropped in one place and left stale in the others. It also starts the game on a
+pty with no key sent and requires the curses screen setup to reach the terminal
+before the first board row: without that the first frame is drawn and then wiped,
+and the game sits blank until a key is pressed. That last part skips where there
+is no pty (Windows); the rest runs wherever Python 3 does.
+
 ## Screenshot
 
 `docs/demo.svg` is the animation above and `docs/demo-frames.txt` is the text

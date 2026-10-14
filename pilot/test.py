@@ -21,6 +21,7 @@ Run from the repository root: python3 -m pilot.test
 import contextlib
 import importlib.util
 import io
+import os
 import pathlib
 import xml.etree.ElementTree as ElementTree
 
@@ -289,3 +290,59 @@ for group in groups:
     assert(animate.get('repeatCount') == 'indefinite')
     assert(animate.get('keyTimes') == '0;0.071429;0.071439;1')   # one 0.5s slot in 7s
 assert('href' not in published and '<script' not in published)
+
+# THE FIRST FRAME: play() draws before it reads a key, and curses emits its screen
+# setup (take the alternate screen, then clear) on its first write to the terminal.
+# Without keypress.py's s.refresh() that setup lands *after* the first draw, so the
+# frame is painted and then wiped and the game sits blank until a key is pressed.
+# The evidence is the raw pty byte stream - with no key sent - because no game-state
+# assertion can see the order the bytes reached the terminal. (The fix commit measured
+# it: setup at byte 105, first board row at 154; before the fix, the row came first.)
+# Skipped where there is no pty: Windows has no pty module.
+if os.name == 'posix':
+    import pty
+    import select
+    import subprocess
+    import sys
+    import time
+
+    SETUP = b'\x1b[?1049h'            # smcup: curses taking the alternate screen
+    FIRST_ROW = b'. . . . . . . . .'  # the board's top row, drawn before any key
+    DONE = b'q quit'                  # the controls line: the frame is complete
+
+    master, slave = pty.openpty()
+    process = subprocess.Popen([sys.executable, '-m', 'pilot.main'],
+                               cwd=ROOT, stdin=slave, stdout=slave, stderr=slave,
+                               close_fds=True, start_new_session=True)
+    os.close(slave)
+    stream = b''
+    try:
+        deadline = time.monotonic() + 15
+        while DONE not in stream and time.monotonic() < deadline:
+            ready, _, _ = select.select([master], [], [], 0.2)
+            if not ready:
+                continue
+            try:
+                chunk = os.read(master, 4096)
+            except OSError:
+                break
+            if not chunk:
+                break
+            stream += chunk
+    finally:
+        process.kill()
+        process.wait()
+        os.close(master)
+
+    assert(DONE in stream), \
+        'a complete first frame never reached the terminal with no key press'
+    assert(SETUP in stream), \
+        'curses never took the screen: no alternate-screen sequence on the pty'
+    assert(FIRST_ROW in stream), \
+        'the board was never drawn'
+    assert(stream.index(SETUP) < stream.index(FIRST_ROW)), \
+        'the first frame was drawn before curses took the screen, so it is wiped ' \
+        'and the game stays blank until a key is pressed (keypress.py must ' \
+        'refresh the screen before the first draw)'
+    assert(stream.count(b'\x1b[K\r\n') >= 10), \
+        'the first frame is incomplete: nine board rows plus the tally did not land'

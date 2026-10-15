@@ -1,4 +1,4 @@
-"""The scripted session behind docs/demo.gif, and the frames it draws.
+"""The scripted session behind docs/demo.svg, and the frames it draws.
 
 docs/make_screenshot.py renders those frames; pilot/test.py recomputes them and
 fails when docs/demo-frames.txt no longer matches, so the picture in the README
@@ -50,5 +50,5 @@ def frames():
 
 
 def text_dump():
-    """The frames as one text block: what the GIF shows, readable in a diff."""
+    """The frames as one text block: what the SVG shows, readable in a diff."""
     return '\n\n'.join('\n'.join(frame) for frame in frames()) + '\n'
